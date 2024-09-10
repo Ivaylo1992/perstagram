@@ -1,0 +1,7 @@
+{% load static %}
+
+{% for photo in all_photos %}
+   {% include 'common/pet_photos.html' with photo=photo %}
+{% empty %}
+    <img class="no-posts" src="{% static 'images/no_posts.png' %}" alt="no posts image">
+{% endfor %}

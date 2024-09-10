@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+
+<!-- Starts Main Section -->
+<main>
+
+    <div class="pet-profile">
+        <!-- Start Pet Personal Data Section -->
+        <div class="profile">
+            <div class="profile-data">
+                <div class="profile_img">
+                    <div class="image">
+                        <!-- Pet URL Image -->
+                        <img src="{{ object.personal_photo }}"
+                             alt="img8">
+                    </div>
+                </div>
+                <div class="personal">
+                    <div class="edit">
+                        <!-- Pet Name -->
+                        <p>{{ object.name }}</p>
+                        {% if object.user.pk == request.user.pk %}
+                        <a href="">
+                            <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
+                        </a>
+                        <!-- Pet Delete Button -->
+                        <a href="{% url 'delete_pet' username=object.user.profile.get_full_name pet_slug=object.slug%}">
+                            <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="data">
+                        <!-- Pet Total Photos -->
+                        <p>{{ object.petphoto_set.count }} photos</p>
+                        <p>{{ total_likes }} photos</p>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- End Pet Personal Data Section -->
+
+        <div class="pet-posts">
+
+            <!-- IF Photos Start Pet Photos Post Section -->
+            {% if pet.petphoto_set.all %}
+
+            {% include "common/pet_photos.html" with all_photos=all_photos%}
+
+            <!-- IF Photos End Pet Photos Post Section -->
+            {% else %}
+            <!-- IF NOT Photos Show No Post Image -->
+            <img class="no-posts" src="{% static 'images/no_posts.png' %}" alt="no posts image">
+            {% endif %}
+
+        </div>
+    </div>
+</main>
+<!-- End Main Section -->
+
+{% endblock %}
